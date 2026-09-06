@@ -1,0 +1,42 @@
+{
+  "name": "portfolio-website",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "verify": "tsc --build --noEmit && eslint . && vite build",
+    "embed": "tsx scripts/embed.ts"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "motion": "^13.2.0",
+    "d3-force": "^3.0.0",
+    "lucide-react": "^1.41.0",
+    "simple-icons": "^16.30.0"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.124.0",
+    "@eslint/js": "^9.38.0",
+    "@types/d3-force": "^3.0.10",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^5.0.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "eslint": "^9.38.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^15.14.0",
+    "prettier": "^3.9.6",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.69.0",
+    "vite": "^6.4.3",
+    "vite-plugin-compression": "^0.5.1"
+  }
+}

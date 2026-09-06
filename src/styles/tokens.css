@@ -1,0 +1,219 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+ * Fonts — self-hosted, woff2, font-display: swap.
+ * Instrument Serif is preloaded in index.html (hero LCP element).
+ * ------------------------------------------------------------------------ */
+
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("/fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/geist-sans-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/geist-sans-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/geist-mono-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------------------------------------------------------------------------
+ * Design tokens — docs/02-design-system.md is the source of truth.
+ * ------------------------------------------------------------------------ */
+
+@theme {
+  /* Colour — six values, no more. */
+  --color-base: #0a0a0b;
+  --color-surface: #141416;
+  --color-line: #232327;
+  --color-ink: #ededef;
+  --color-muted: #7a7a85;
+  --color-signal: #ffb020;
+
+  /* Type families */
+  --font-serif: "Instrument Serif", serif;
+  --font-sans: "Geist", sans-serif;
+  --font-mono: "Geist Mono", monospace;
+
+  /* Type scale — size / line-height / tracking per docs/02-design-system.md.
+     Tailwind v4 --text-* tokens pair a size with a --tw-line-height default;
+     letter-spacing on display steps is applied via the matching --tracking-*
+     token in the utility below since @theme text tokens carry only size + leading. */
+  --text-display-xl: clamp(2.75rem, 1.6rem + 5.2vw, 4.5rem);
+  --text-display-xl--line-height: 1.05;
+  --text-display-lg: clamp(1.875rem, 1.4rem + 2.2vw, 2.5rem);
+  --text-display-lg--line-height: 1.15;
+  --text-display-md: 1.75rem;
+  --text-display-md--line-height: 1.25;
+  --text-body-lg: 1.1875rem;
+  --text-body-lg--line-height: 1.65;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.55;
+  --text-data: 0.8125rem;
+  --text-data--line-height: 1.4;
+  --text-data-sm: 0.75rem;
+  --text-data-sm--line-height: 1.4;
+
+  --tracking-display-xl: -0.02em;
+  --tracking-display-lg: -0.01em;
+  --tracking-data: 0.02em;
+  --tracking-data-sm: 0.02em;
+
+  /* Spacing — 8px baseline grid plus the one section rhythm value. */
+  --spacing-section: 10rem; /* 160px desktop; halved via md: override at call sites */
+  --spacing-section-mobile: 6rem; /* 96px */
+
+  /* Layout — 12 columns, 1200px max, 24px gutters. */
+  --container-content: 75rem; /* 1200px */
+
+  /* Hero: full viewport, floor of 640px. Statement line length caps at 60ch. */
+  --height-hero-min: 40rem; /* 640px */
+  --width-hero-statement: 60ch;
+
+  /* About: prose line length caps at 62ch. */
+  --width-about-prose: 62ch;
+
+  /* Radii — three values, assigned by hierarchy, never one radius for everything. */
+  --radius-chip: 2px;
+  --radius-button: 4px;
+  --radius-panel: 6px;
+
+  /* Motion — two durations only. */
+  --duration-interaction: 160ms;
+  --duration-disclosure: 200ms;
+}
+
+/* ---------------------------------------------------------------------------
+ * Background grid — fixed, 48px cells, 1.5% opacity. Barely perceptible.
+ * ------------------------------------------------------------------------ */
+
+.bg-grid {
+  position: relative;
+}
+
+.bg-grid::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-ink) 1.5%, transparent) 0,
+      color-mix(in srgb, var(--color-ink) 1.5%, transparent) 1px,
+      transparent 1px,
+      transparent 48px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-ink) 1.5%, transparent) 0,
+      color-mix(in srgb, var(--color-ink) 1.5%, transparent) 1px,
+      transparent 1px,
+      transparent 48px
+    );
+}
+
+/* ---------------------------------------------------------------------------
+ * Base document defaults.
+ * ------------------------------------------------------------------------ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-base);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Hero schematic pulse — one signal-coloured dash travels the traced path
+ * every 5s. Disabled entirely (not shortened) under reduced motion via the
+ * component not rendering the path at all, so no override is needed here.
+ * ------------------------------------------------------------------------ */
+
+@keyframes hero-pulse {
+  from {
+    stroke-dashoffset: 345;
+  }
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+.animate-hero-pulse {
+  animation: hero-pulse 5s linear infinite;
+}
+
+/* ---------------------------------------------------------------------------
+ * Hero load sequence — one orchestrated reveal, fires once on first paint.
+ * Opacity/transform only, so it never affects layout (CLS stays 0) and never
+ * delays LCP: the h1 text node paints immediately, this only animates it in
+ * place. Reduced motion renders the final state with no animation at all.
+ * ------------------------------------------------------------------------ */
+
+@keyframes hero-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-reveal {
+  animation: hero-reveal 500ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-reveal {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
