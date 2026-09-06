@@ -20,28 +20,21 @@ export interface Profile {
   timezone: string;
   /** IANA zone identifier used to compute the live time, e.g. "Asia/Kolkata". */
   timezoneId: string;
-  yearsExperience: string;
   updatedMonth: string;
   aboutParagraph: string;
+  /** Path to a real photo, once one exists. Omitted renders a plain muted
+   * placeholder circle instead of inventing a stand-in image — see
+   * docs/03-sections.md §2 and docs/04-content-rules.md's placeholder-token
+   * rule. Per the documented photo rule: grayscale, ≤160px, sentence-case
+   * caption beneath, when a real one is added. */
+  photoPath?: string;
+  /** Contact section's centred statement — 2 lines max, active voice, specific
+   * about what you want. Not a documented placeholder token in
+   * docs/04-content-rules.md; added in S-015, flagged in ICEBOX. */
+  contactStatement: string;
   facts: [ProfileFact, ProfileFact, ProfileFact, ProfileFact];
   /** Whether the availability indicator in the hero shows as open. */
   available: boolean;
-}
-
-export interface Role {
-  company: string;
-  role: string;
-  dates: string;
-  /** 2–3 outcome-led bullets, per docs/04-content-rules.md. */
-  bullets: [string, string] | [string, string, string];
-  stack: string[];
-}
-
-export interface Metric {
-  figure: string;
-  label: string;
-  /** How this figure was measured. Required — never optional. */
-  condition: string;
 }
 
 export interface Project {
@@ -49,40 +42,20 @@ export interface Project {
   order: number;
   problem: string;
   solution: string;
-  metrics: Metric[];
+  /** 3-5 short feature/capability statements — what it actually does. */
+  features: string[];
   stack: string[];
   repoUrl: string;
-  /**
-   * "What breaks at scale" — 3 or 4 honest bullets naming the real bottleneck.
-   * A project with fewer than 3 fails typecheck: this is required content,
-   * not an optional disclosure.
-   */
-  limits: [string, string, string] | [string, string, string, string];
+}
+
+export interface Skill {
+  label: string;
+  /** Key into src/content/skillIcons.ts. Omitted for concepts/tools with no
+   * real logo mark (e.g. RAG, Prompt Engineering, AWS). */
+  icon?: string;
 }
 
 export interface SkillCategory {
   name: string;
-  context: string;
-  chips: string[];
-}
-
-export interface GraphNode {
-  id: string;
-  label: string;
-  /** simple-icons slug, recoloured to --color-muted at rest. */
-  icon: string;
-}
-
-export interface GraphEdge {
-  source: string;
-  target: string;
-}
-
-export interface Capability {
-  title: string;
-  description: string;
-  /** Real libraries/tools used, named plainly. */
-  libraries: string[];
-  /** id of the Project (see projects.ts) that demonstrates this, if one exists. */
-  relatedProjectId?: string;
+  skills: Skill[];
 }

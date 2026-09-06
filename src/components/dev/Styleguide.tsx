@@ -123,7 +123,9 @@ export function Styleguide() {
       </StyleSection>
 
       <StyleSection title="CopyLink">
-        <CopyLink text="akash.more@openspaceservices.com">Copy email</CopyLink>
+        <CopyLink href="mailto:hello@example.com" copyValue="hello@example.com">
+          hello@example.com
+        </CopyLink>
       </StyleSection>
 
       <StyleSection title="Disclosure">

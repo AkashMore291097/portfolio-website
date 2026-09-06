@@ -1,20 +1,29 @@
 # 03 — Sections
 
-Scroll order, top to bottom:
+Scroll order, top to bottom, as originally spec'd:
 
 **Hero → About → Experience → Featured projects → AI work → Skills → Contact → Footer**
 
-Weighting is deliberate and unequal. Experience, Featured projects, and AI work take
-roughly 70% of the page's vertical space. About, Skills, and Contact stay compact.
-Do not "balance" them.
+**As actually built** (AI work was explicitly skipped — see §5 below — and Experience
+was removed by direct user decision after S-017: a personal portfolio for a POC-driven
+GenAI differentiator doesn't need a company-history section, and Featured projects
+already carries the "what have you built" argument — see `backlog/BACKLOG.md`'s S-020
+changelog entry):
+
+**Hero → About → Featured projects → Skills → Contact → Footer**
+
+Weighting is deliberate and unequal. Featured projects takes the largest share of the
+page's vertical space. About, Skills, and Contact stay compact. Do not "balance" them.
 
 ---
 
 ## Persistent chrome
 
 ### Nav rail
-Fixed left, 64px wide, vertically centred, desktop ≥1024px only. Eight items, each a
-number and a hairline tick. Active item's tick fills `--color-signal` and its number goes
+Fixed left, 64px wide, vertically centred, desktop ≥1024px only. Six items (originally
+spec'd as eight, before AI work and Experience were both dropped — see §5 and §3), each
+a number and a hairline tick.
+Active item's tick fills `--color-signal` and its number goes
 to `--color-ink`. Driven by `IntersectionObserver` with `rootMargin: "-45% 0px -45% 0px"`
 so the active state changes at the viewport midline, not the top edge.
 
@@ -24,10 +33,11 @@ Keyboard: rail items are real links to section IDs, tab-reachable, and the page 
 `scroll-behavior: smooth` unless reduced motion is set.
 
 ### Command palette
-`⌘K` / `Ctrl+K`. Overlay on `--color-surface`, fuzzy filter over: jump to each section,
-download resume, copy email, open GitHub, open LinkedIn, ask the resume chat a question
-(focuses the chat input and pre-fills). Arrow keys navigate, Enter runs, Escape closes,
-focus returns to the trigger. Focus is trapped while open.
+`⌘K` / `Ctrl+K`. Overlay on `--color-surface`, fuzzy filter over: jump to each of the
+five real content sections (Footer is chrome, not a jump destination), download resume,
+copy email, open GitHub, open LinkedIn. (The originally-spec'd "ask the resume chat"
+action is gone along with the chat section itself — see §5.) Arrow keys navigate, Enter
+runs, Escape closes, focus returns to the trigger. Focus is trapped while open.
 
 It is genuinely useful on a long page — that is why it is here. There is no visible
 "press ⌘K" hint in the hero; the people who will use it already try it.
@@ -77,21 +87,48 @@ Mobile: schematic moves below the buttons at 40% scale; bottom strip stacks to t
 
 ## 2. About
 
-Asymmetric. Prose on columns 1–5, facts on 7–12.
+Asymmetric. Photo on columns 1–3 (tightened to fit its own content rather than a wide
+near-empty grid track), prose + facts stacked on columns 5–12. (Layout has moved several
+times by direct user request — see `backlog/BACKLOG.md`'s S-021/S-022/S-023/S-024
+changelog entries. The facts row was removed in S-022 then reinstated, stacked beneath
+the prose rather than in its own column, in S-024 once the section read as too sparse
+with just one paragraph next to a small photo in a wide column.)
 
 Prose: 3–4 sentences, `body-lg`, 62ch. Covers years, what you build, why systems, where
 GenAI fits. It should sound like a person talking, not a LinkedIn summary. No greeting,
 no wave emoji, no "passionate about".
 
-Facts: four rows, hairline-separated. Value in `data` at 20px `--color-ink`, label beneath
-in `body-sm` `--color-muted`. E.g. years shipping, primary stack, focus, location.
+Facts: four items, 2-up on narrow / 4-up from `sm` up, stacked beneath the prose in the
+same column (not a separate column — that read as too empty next to a single paragraph).
+Value in `data` at `--color-ink`, label beneath in `body-sm` `--color-muted`. Currently:
+years shipping, focus, featured projects, location.
 
-No photo. If one is added later, treat it as a figure: grayscale, ≤160px, sentence-case
-caption beneath.
+Photo: a figure, up to 256px circle (scales to fill its column width, capped at 256px —
+sized up from the original 160px in S-025 so it fills its column rather than floating
+small inside it), left-aligned. `Profile.photoPath` now points at a real, user-supplied
+illustrated avatar (`public/assets/avatar.png`) — it is a deliberate, confirmed exception
+to the grayscale rule below (see `backlog/ICEBOX.md`'s S-023 entry): it renders full
+colour as the user explicitly chose, being a branded illustration rather than a plain
+photograph. Falls back to a plain muted-outline placeholder circle only if `photoPath` is
+ever unset. If a plain photograph replaces this avatar later, apply the original rule to
+it instead: grayscale, ≤160px, sentence-case caption beneath — the 256px cap and
+column-filling behaviour are specific to this branded-avatar exception, not the general
+photo rule.
 
 ---
 
-## 3. Experience
+## 3. Experience — NOT BUILT
+
+This section (a company-history timeline) was explicitly removed by direct user
+decision after S-017 — see `backlog/BACKLOG.md`'s S-020 changelog entry. Reasoning: this
+is a personal portfolio built around a POC-driven GenAI differentiator, not a resume
+site; a company-employment timeline doesn't serve that story, and Featured projects
+already carries the "what have you built" argument on its own. It does not exist in
+scroll order today. The spec that used to live here is kept below purely for reference;
+it is not pending work.
+
+<details>
+<summary>Historical spec (not built)</summary>
 
 Timeline on a single 1px vertical rule at column 2. Each role is a node: 7px square,
 `--color-base` fill, `--color-line` border, `--color-signal` border when its entry is the
@@ -121,6 +158,8 @@ Under reduced motion the rule renders fully filled at `--color-line`.
 Most recent role first. No logos — company wordmarks in mixed brand colours would break
 the palette.
 
+</details>
+
 ---
 
 ## 4. Featured projects
@@ -141,23 +180,24 @@ names the constraint, not the feature.   ╰────────────
 Two or three sentences on the approach   │  demo.mp4, looping,     │
 and the decision that mattered.          │  muted, poster frame    │
                                          ╰────────────────────────╯
-                                          Recorded on a local run
-340 ms      4.2×        500
-p95 query   throughput  documents
-Local, 500 docs, M2 Air  ← condition line, required
 
 [Python] [FAISS] [FastAPI] [Postgres]
 
 View repository        Read case study
-
-▸ What breaks at scale
 ```
+
+(Two things originally spec'd here were removed by direct user request, both logged in
+`backlog/BACKLOG.md`'s changelog: the "What breaks at scale" disclosure beneath the repo
+link — S-032 — and the metrics row (figure/label/condition triples) — S-033. Neither
+`Project.limits` nor `Project.metrics` exist anymore; the `Metric` and `Disclosure` UI
+primitives themselves are untouched and still demonstrated in the dev styleguide, just
+unused in Featured projects now. As of S-033, each project is problem, solution,
+features, and stack only — no numeric claims at all, which sidesteps the honesty
+constraint below entirely rather than needing a condition line for anything.)
 
 - **Problem before solution.** The project is framed as an engineering problem, not a
   product. Problem framing is judged on reasoning; product framing invites "how many
   users?", which is the wrong conversation for a POC.
-- **Metrics** use the `Metric` primitive and every group carries its condition line. A
-  number without its measurement conditions does not ship.
 - **Diagram**: real components and real edges — client, API, queue, store, model. Node
   labels in `data`. Same visual language as the skills graph so the page feels authored
   by one hand.
@@ -165,61 +205,61 @@ View repository        Read case study
   `IntersectionObserver`-triggered. Caption beneath in `body-sm`. Pause control is
   keyboard-reachable. If no video exists yet, render the diagram alone — do not
   substitute a screenshot of an IDE.
-- **What breaks at scale**: `Disclosure`, collapsed by default, `--color-surface` when
-  open. 3–4 honest bullets naming the actual bottleneck and what would be needed to pass
-  it. This is the highest-signal content on the page. It reads as confidence, not
-  weakness, and it communicates the project's scope without a "POC" badge.
 
-Three projects. Not six. At the end of the section, one text link to the GitHub profile.
+Originally spec'd as "three projects, not six", on the reasoning that this is the
+heaviest section and each project gets a full-width band, so a longer list dilutes the
+strongest work rather than showcasing it. As of S-036 it carries **four**, by direct
+user request: the Ecommerce Order Agent was added alongside the AI CRM Sales Assistant
+even though the two are similar in kind (both single-tool FastAPI/LangGraph agents over
+MySQL). Logged as a deliberate, confirmed exception in `backlog/ICEBOX.md`, not drift.
+If a fifth is ever proposed, re-read the original reasoning above before agreeing.
+
+At the end of the section, one text link to the GitHub profile.
 
 ---
 
-## 5. AI work
+## 5. AI work — NOT BUILT
 
-This section deliberately breaks the page's layout pattern, because a pattern break marks
-importance and this is the differentiator.
+This whole section (resume chat, retrieval trace, capability blocks) was explicitly
+skipped by direct user decision — see `backlog/BACKLOG.md`'s S-010/S-011/S-012 changelog
+entries for the reasoning (the Featured projects section was judged sufficient to
+showcase the work). It does not exist in scroll order today. The spec that used to live
+here is kept in git history for reference only; it is not pending work.
 
-**Upper half — the resume chat.** Centred `Panel`, max 720px, the only centred layout
-block above the contact statement.
-
-```
-╭──────────────────────────────────────────────────────╮
-│  Ask about my experience                             │
-│                                                      │
-│  [ streamed answer appears here ]                    │
-│                                                      │
-│  ▸ Retrieval trace                                   │
-│    Experience — Company 2          0.81              │
-│    Project — Ledger Sync           0.74              │
-│    Retrieval 42 ms · Generation 1.1 s · 612 tokens   │
-│                                                      │
-│  ┌────────────────────────────────────┐ [ Ask ]      │
-│  │ Type a question                    │              │
-│  └────────────────────────────────────┘              │
-│  What has he built with RAG?  Strongest project?     │
-╰──────────────────────────────────────────────────────╯
-```
-
-- Three suggested questions as chips beneath the input. People do not think of questions
-  unprompted; without these the component sits unused.
-- The **retrieval trace** is the point of the section. Sources, similarity scores,
-  retrieval and generation latency, token count. Collapsed by default, expanded state
-  persisted in `sessionStorage`. Anyone can claim RAG experience; showing scored chunks
-  is proof.
-- States: idle (empty, input focused), streaming (`aria-busy`, cursor block), answered,
-  no-match (documented copy in `04-content-rules.md`, offers the contact link),
-  rate-limited (states the limit plainly), error (says what failed and what to do — never
-  "Oops! Something went wrong").
-- Single-turn. Say so in one line beneath the input rather than simulating memory.
-
-**Lower half — capability blocks.** 2×2, single column on mobile. Each: a small line
-diagram in `--color-muted` (not an icon glyph), a `display-md` serif title, two lines of
-`body-sm`. RAG pipelines, agents and tool use, voice, MCP tooling. Each names the real
-libraries used, and links to the project below that demonstrates it where one exists.
+The site's real scroll order today is: **Hero → About → Featured projects → Skills →
+Contact → Footer.**
 
 ---
 
 ## 6. Skills
+
+Shipped as continuously floating, always-brand-coloured logo bubbles grouped into
+categories (Backend, Frontend, GenAI & LLM, Cloud & Tools) — a full, explicit, user-
+requested departure from the force-directed dependency graph originally spec'd below.
+See `backlog/ICEBOX.md`'s S-013 entries for the reasoning: both "not floating bubbles"
+and "monochrome logos, signal only on hover" (the two rules this section used to encode)
+are deliberately broken here at the user's request. If this spec is ever revised, update
+it to describe the bubbles rather than reading the paragraphs below as current.
+
+Each bubble is a fixed-size circle: a real per-tool `simple-icons` brand mark at full
+colour where one exists (e.g. React's cyan, Node's green), or a short initialism for
+terms with no logo (concepts like RAG/MCP, or brands simple-icons doesn't carry, e.g.
+AWS) — every bubble the same diameter regardless. Bubbles drift continuously via a
+`translateY` keyframe with a per-bubble randomised-but-deterministic duration/delay/
+amplitude so they don't move in lockstep; the animation pauses while the section is
+off-screen (`IntersectionObserver`) and never runs at all under
+`prefers-reduced-motion: reduce`.
+
+No proficiency bars, no percentages, no star ratings. "React — 85%" is unverifiable, and
+quantifying yourself against nothing reads junior.
+
+---
+
+### Historical spec (not built) — force-directed skills graph
+
+The paragraphs below describe the originally-planned Skills section: a settled
+dependency graph plus a plain category list beneath it. Neither exists in the current
+build (see the note above) — kept for reference only.
 
 Two parts.
 
@@ -248,9 +288,6 @@ Mobile: simplified 9-node variant, drag disabled, pulses retained.
 `display-md` serif on columns 1–3, a one-line sentence of context beneath it in `body-sm`,
 chips filling columns 4–12.
 
-No proficiency bars, no percentages, no star ratings. "React — 85%" is unverifiable, and
-quantifying yourself against nothing reads junior.
-
 ---
 
 ## 7. Contact
@@ -271,13 +308,12 @@ address anyway.
 
 ## 8. Footer
 
-Thin, 1px top border.
+Thin, 1px top border. One row: copyright on the left, GitHub/LinkedIn/email on the right.
 
-Left: name and a one-line tagline. Right: GitHub, LinkedIn, email.
-
-Beneath, a `data-sm` build strip in `--color-muted`, values injected at build time and
-never hardcoded: gzipped bundle size, LCP from the last Lighthouse run, commit hash
-linked to GitHub, deploy date. This only lands because it is measured — if any value
-cannot be generated at build time, remove that value rather than faking it.
-
-Copyright line last, sentence case.
+(Originally spec'd with a name + tagline block on the left and a build-metrics strip
+beneath — gzipped bundle size, LCP, commit hash, deploy date — proving those numbers
+were real rather than decorative. Both were removed by direct user request in S-030 —
+see `backlog/BACKLOG.md`'s changelog. `Profile.tagline` no longer exists; the
+`__BUILD_COMMIT__`/`__BUILD_DATE__` Vite `define` machinery in `vite.config.ts` was
+removed with it, confirmed unreferenced elsewhere first. S-017's audit no longer has a
+build strip to verify — its acceptance criteria were updated to match.)

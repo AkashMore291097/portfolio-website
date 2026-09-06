@@ -16,3 +16,10 @@ yarn-debug.log*
 yarn-error.log*
 
 *.tsbuildinfo
+
+# Claude Code local state (not project content; CLAUDE.md itself stays tracked)
+.claude/
+
+# Project process files, no longer tracked in git per explicit request
+backlog/
+docs/

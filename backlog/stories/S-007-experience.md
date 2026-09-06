@@ -2,6 +2,10 @@
 
 **Epic:** E2 Narrative · **Approval:** no
 
+> **REMOVED by S-020.** This section shipped as described below, then was deleted
+> entirely by direct user request — see `backlog/BACKLOG.md`'s S-020 changelog entry.
+> Kept here as historical record only; not pending work.
+
 ## Goal
 Chronological roles on a single rule, with a scroll-driven fill.
 

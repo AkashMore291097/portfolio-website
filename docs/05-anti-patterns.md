@@ -31,8 +31,11 @@ site would fail its one job.
 ## Content tells
 
 - [ ] Any claim of production use, uptime, users, or traffic
-- [ ] A metric without its condition line
-- [ ] A project missing its "What breaks at scale" block
+- [ ] ~~A metric without its condition line~~ (moot as of S-033 — Featured projects no
+  longer carries a metrics row at all; still applies if a metric is ever reintroduced
+  anywhere on the site)
+- [ ] ~~A project missing its "What breaks at scale" block~~ (removed in S-032 — the
+  block no longer exists site-wide, so this check no longer applies)
 - [ ] An invented company, date, metric, or URL where a token belongs
 - [ ] Banned vocabulary from `04-content-rules.md`
 - [ ] Skill proficiency bars, percentages, or star ratings

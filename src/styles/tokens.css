@@ -81,9 +81,13 @@
   --tracking-data: 0.02em;
   --tracking-data-sm: 0.02em;
 
-  /* Spacing — 8px baseline grid plus the one section rhythm value. */
-  --spacing-section: 10rem; /* 160px desktop; halved via md: override at call sites */
-  --spacing-section-mobile: 6rem; /* 96px */
+  /* Spacing — 8px baseline grid plus the one section rhythm value.
+     docs/02-design-system.md specifies 160px/96px as the gap BETWEEN
+     sections, not each section's own top+bottom padding — so every section
+     contributes half the rhythm on each side, and two adjacent sections'
+     padding sums to the documented 160px/96px rather than doubling it. */
+  --spacing-section: 5rem; /* 80px desktop per side (160px between sections) */
+  --spacing-section-mobile: 3rem; /* 48px mobile per side (96px between sections) */
 
   /* Layout — 12 columns, 1200px max, 24px gutters. */
   --container-content: 75rem; /* 1200px */
@@ -215,5 +219,24 @@ body {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Skills bubbles — continuous ambient float, an explicit exception to the
+ * site's "no ambient motion that encodes nothing" rule, at the user's
+ * request. SkillBubbles only ever applies the `animation` inline style when
+ * both prefers-reduced-motion is off and the section is on-screen (tracked
+ * via IntersectionObserver), so reduced motion and off-screen pausing are
+ * handled in JS rather than by fighting an always-on animation with CSS.
+ * ------------------------------------------------------------------------ */
+
+@keyframes skill-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(-1 * var(--skill-float-amplitude, 8px)));
   }
 }

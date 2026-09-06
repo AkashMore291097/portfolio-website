@@ -16,12 +16,12 @@ export function Disclosure({ label, children }: DisclosureProps) {
         onClick={() => {
           setOpen((prev) => !prev);
         }}
-        className="flex w-full items-center gap-2 py-4 text-left text-body text-ink"
+        className="group flex w-full items-center gap-2 py-4 text-left text-body text-ink transition-colors duration-interaction ease-out hover:text-signal active:text-signal"
       >
         <svg
           viewBox="0 0 12 12"
           aria-hidden="true"
-          className="size-3 shrink-0 fill-none stroke-muted transition-transform duration-disclosure ease-out"
+          className="size-3 shrink-0 fill-none stroke-muted transition-[stroke,transform] duration-disclosure ease-out group-hover:stroke-signal group-active:stroke-signal"
           style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)" }}
         >
           <path d="M3 1.5 8.5 6 3 10.5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

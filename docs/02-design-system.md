@@ -77,9 +77,15 @@ be barely perceptible — if it is legible as a grid at a glance, halve the opac
 One treatment, used everywhere, no eyebrow label:
 
 ```
-Experience                                    ← display-lg, serif
-────────────────────────────────────────      ← 1px --color-line, full content width
+Featured projects                             ← display-lg, serif
+────────────────────────────────────────      ← 1px --color-signal, full content width
 ```
+
+The underline was `--color-line` through S-027; changed to `--color-signal` in S-029 by
+direct user request, applying the site's one existing accent colour more visibly rather
+than introducing a new one — see `backlog/BACKLOG.md`'s S-029 changelog entry. It is
+still one treatment applied to every section via the shared `Section` component, not a
+per-section colour.
 
 Numbers appear in exactly two places, both genuine sequences: the nav rail (scroll order)
 and project ordering (`Project 1 of 3`). They do not appear above section headings, where
@@ -98,8 +104,10 @@ they would encode nothing.
   `--color-muted`, condition line in `data-sm`. The condition line is required, never
   optional. See `docs/04-content-rules.md`.
 - **CopyLink** — text that copies on click and swaps to a confirmation for 1.6s.
-- **Disclosure** — the `What breaks at scale` expander. Triangle rotates, height animates
-  200ms. This is user-triggered motion and therefore fine.
+- **Disclosure** — a generic expander primitive (triangle rotates, height animates 200ms,
+  user-triggered motion so it's fine). Originally used for `What breaks at scale` in
+  Featured projects; that usage was removed in S-032, but the primitive itself remains,
+  demonstrated in the dev styleguide, and is available for any future expandable block.
 
 Radius vocabulary: 2px chips, 4px buttons, 6px panels. Three values, assigned by
 hierarchy rather than one radius applied to everything.

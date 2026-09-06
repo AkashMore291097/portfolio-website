@@ -18,6 +18,9 @@ export function Section({ id, title, children, headingLevel = "h2" }: SectionPro
   const headingSize = headingLevel === "h1" ? "text-display-xl tracking-display-xl" : "text-display-lg tracking-display-lg";
 
   return (
+    // py-section(-mobile) is half the documented section rhythm on each
+    // side, so two adjacent sections' padding sums to the full 160px/96px
+    // gap rather than doubling it — see the comment in tokens.css.
     <section
       id={id}
       aria-labelledby={headingId}
@@ -28,7 +31,7 @@ export function Section({ id, title, children, headingLevel = "h2" }: SectionPro
           <Heading id={headingId} className={`${headingSize} font-serif text-ink`}>
             {title}
           </Heading>
-          <hr className="border-t border-line" />
+          <hr className="border-t border-signal" />
         </div>
         {children}
       </div>

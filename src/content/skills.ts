@@ -1,59 +1,48 @@
-import type { GraphEdge, GraphNode, SkillCategory } from "@/content/types";
+import type { SkillCategory } from "@/content/types";
 
-// Generic, swap-in defaults — not tied to any specific claim about the
-// author's real stack. Replace chips/nodes with the real toolset before launch.
 export const skillCategories: SkillCategory[] = [
   {
-    name: "Languages",
-    context: "What most systems here are written in.",
-    chips: ["TypeScript", "Python", "SQL"],
-  },
-  {
     name: "Backend",
-    context: "Services, APIs, and the runtime they ship on.",
-    chips: ["Node.js", "FastAPI", "PostgreSQL", "Redis"],
-  },
-  {
-    name: "Data & AI",
-    context: "Retrieval, embeddings, and model orchestration.",
-    chips: ["LangChain", "FAISS", "Anthropic API"],
-  },
-  {
-    name: "Infra",
-    context: "How services are built, shipped, and run.",
-    chips: ["Docker", "AWS", "Vercel"],
+    skills: [
+      { label: "Node.js", icon: "nodedotjs" },
+      { label: "Express.js", icon: "express" },
+      { label: "Python", icon: "python" },
+      { label: "FastAPI", icon: "fastapi" },
+      { label: "PostgreSQL", icon: "postgresql" },
+      { label: "MySQL", icon: "mysql" },
+      { label: "Redis", icon: "redis" },
+    ],
   },
   {
     name: "Frontend",
-    context: "The layer the reader is looking at right now.",
-    chips: ["React", "Vite", "Tailwind CSS"],
+    skills: [
+      { label: "React.js", icon: "react" },
+      { label: "JavaScript", icon: "javascript" },
+      { label: "HTML5", icon: "html5" },
+      { label: "CSS3", icon: "css3" },
+    ],
   },
   {
-    name: "Tooling",
-    context: "Version control, testing, and everyday plumbing.",
-    chips: ["Git", "GitHub Actions", "Vitest"],
+    name: "GenAI & LLM",
+    skills: [
+      { label: "LangChain", icon: "langchain" },
+      { label: "LangGraph", icon: "langgraph" },
+      { label: "RAG" },
+      { label: "Vector Databases" },
+      { label: "Embeddings" },
+      { label: "Agents" },
+      { label: "Prompt Engineering" },
+      { label: "MCP" },
+    ],
   },
-];
-
-export const graphNodes: GraphNode[] = [
-  { id: "react", label: "React", icon: "react" },
-  { id: "node", label: "Node.js", icon: "nodedotjs" },
-  { id: "postgres", label: "PostgreSQL", icon: "postgresql" },
-  { id: "redis", label: "Redis", icon: "redis" },
-  { id: "langchain", label: "LangChain", icon: "langchain" },
-  { id: "faiss", label: "FAISS", icon: "meta" },
-  { id: "docker", label: "Docker", icon: "docker" },
-  { id: "vercel", label: "Vercel", icon: "vercel" },
-  { id: "python", label: "Python", icon: "python" },
-];
-
-export const graphEdges: GraphEdge[] = [
-  { source: "react", target: "node" },
-  { source: "node", target: "redis" },
-  { source: "node", target: "postgres" },
-  { source: "node", target: "docker" },
-  { source: "docker", target: "vercel" },
-  { source: "langchain", target: "faiss" },
-  { source: "langchain", target: "python" },
-  { source: "python", target: "node" },
+  {
+    name: "Cloud & Tools",
+    skills: [
+      { label: "AWS" },
+      { label: "Git", icon: "git" },
+      { label: "Jenkins", icon: "jenkins" },
+      { label: "GitHub Copilot", icon: "githubcopilot" },
+      { label: "Claude Code", icon: "claudecode" },
+    ],
+  },
 ];

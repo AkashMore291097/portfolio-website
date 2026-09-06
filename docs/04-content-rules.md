@@ -15,27 +15,25 @@ repository in under a minute.
 "battle-tested", "handles millions of requests", or any traffic, revenue, or user figure
 that did not happen.
 
-**Instead:** frame each project as an engineering problem solved, quantify what was
-actually measured, and state the limits explicitly.
+**Instead:** frame each project as an engineering problem solved.
 
-### Metric rule
+### Metric rule — REMOVED
 
-Every metric group carries a condition line naming how it was measured.
+Featured projects no longer carry a numeric metrics row at all (removed by direct user
+request in S-033 — see `backlog/BACKLOG.md`'s changelog entry; `Project.metrics` no
+longer exists in `content/types.ts`). The rule that used to govern that row — every
+metric group carries a condition line naming how it was measured, since an unconditioned
+number reads as invented rather than measured — is kept here in case a metrics row is
+ever reintroduced; it is not currently enforced anywhere in the codebase.
 
-- Correct: `340 ms — p95 retrieval` / condition: `Local benchmark, 500 documents, M2 Air`
-- Wrong: `340 ms — p95 retrieval in production`
-- Wrong: any metric with no condition line
+### "What breaks at scale" — REMOVED
 
-The condition does not weaken the number. It shows it was measured rather than invented,
-which is exactly what makes it believable.
-
-### "What breaks at scale"
-
-Required for every featured project. 3–4 bullets naming the real bottleneck and what
-would be needed to pass it. Specific, not modest — "flat FAISS index becomes the
-bottleneck past ~10k documents; would need IVF or a managed vector store", not "could be
-optimised further". Knowing where your system breaks is the clearest available marker of
-production thinking, and it communicates scope without needing a disclaimer badge.
+This block (3–4 bullets naming the real bottleneck per featured project) was removed by
+direct user request in S-032 — see `backlog/BACKLOG.md`'s changelog entry.
+`Project.limits` no longer exists in `content/types.ts`. Kept here as a struck section
+rather than deleted outright, since the reasoning it originally documented (knowing
+where a system breaks is a marker of production thinking) may be worth reviving in a
+different form later.
 
 ## Voice
 
@@ -47,7 +45,7 @@ Banned throughout: "passionate about", "cutting-edge", "leveraging", "seamless",
 emoji, `→` appended to link text, and any headline with a single word coloured or
 italicised for emphasis.
 
-Bullets in Experience state outcomes, not duties. Lead with the number when one exists.
+Bullets in Featured projects' feature lists state outcomes, not duties.
 
 ## Placeholder tokens
 
@@ -57,13 +55,23 @@ employers and dates are the one failure mode that cannot be quietly fixed later.
 ```
 {{FULL_NAME}} {{PROFESSIONAL_TITLE}} {{POSITIONING_STATEMENT}}
 {{EMAIL}} {{GITHUB_URL}} {{LINKEDIN_URL}} {{RESUME_PATH}} {{LOCATION}}
-{{YEARS_EXPERIENCE}} {{ABOUT_PARAGRAPH}}
-{{COMPANY_N_NAME}} {{COMPANY_N_ROLE}} {{COMPANY_N_DATES}}
-{{COMPANY_N_BULLET_1..3}} {{COMPANY_N_STACK}}
+{{ABOUT_PARAGRAPH}} {{PHOTO_PATH}}
 {{PROJECT_N_NAME}} {{PROJECT_N_PROBLEM}} {{PROJECT_N_SOLUTION}}
-{{PROJECT_N_METRIC_1..3}} {{PROJECT_N_METRIC_CONDITION}}
-{{PROJECT_N_STACK}} {{PROJECT_N_REPO_URL}} {{PROJECT_N_LIMITS_1..4}}
+{{PROJECT_N_STACK}} {{PROJECT_N_REPO_URL}}
 ```
+
+(`{{PROJECT_N_METRIC_*}}` and `{{PROJECT_N_LIMITS_*}}` are gone with the metrics row and
+the "What breaks at scale" block — see S-032/S-033. `N` currently runs 1–4, since
+Featured projects carries four projects as of S-036.)
+
+(`{{YEARS_EXPERIENCE}}` and the `{{COMPANY_N_*}}` tokens are gone along with the
+Experience section — see `docs/03-sections.md` §3 and `backlog/BACKLOG.md`'s S-020
+changelog entry. `{{PHOTO_PATH}}` is genuinely optional, unlike every other token here —
+`Profile.photoPath` is `undefined` until a real photo exists, and About renders a plain
+muted placeholder circle rather than a literal `{{PHOTO_PATH}}` string in that case. As
+of S-023, `Profile.photoPath` is filled in with a real path
+(`public/assets/avatar.png`), so this token is now resolved — see `docs/03-sections.md`
+§2 for the current, confirmed grayscale exception this specific avatar carries.)
 
 Render tokens literally and visibly. Do not style them to look like finished copy — the
 author needs to see at a glance what is still unfilled.

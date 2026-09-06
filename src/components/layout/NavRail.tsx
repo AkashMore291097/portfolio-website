@@ -20,7 +20,7 @@ export function NavRail() {
             key={section.id}
             href={`#${section.id}`}
             aria-current={isActive ? "true" : undefined}
-            className="group flex flex-col items-center gap-1.5 py-1"
+            className="group flex flex-col items-center gap-1.5 py-1 transition-opacity duration-interaction ease-out active:opacity-70"
           >
             <span
               className={`text-data font-mono tracking-data transition-colors duration-interaction ease-out ${

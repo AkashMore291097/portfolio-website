@@ -35,7 +35,7 @@ export function Hero() {
       aria-labelledby="hero-heading"
       className="flex min-h-hero-min flex-col justify-center"
     >
-      <div className="mx-auto grid w-full max-w-content flex-1 grid-cols-1 items-center gap-12 px-6 py-16 lg:grid-cols-12">
+      <div className="mx-auto grid w-full max-w-content flex-1 grid-cols-1 items-center gap-12 px-6 pt-16 pb-8 lg:grid-cols-12">
         <div className="flex flex-col gap-6 lg:col-span-7">
           <h1
             id="hero-heading"
@@ -59,11 +59,23 @@ export function Hero() {
             className="animate-hero-reveal flex flex-wrap items-center gap-4"
             style={{ animationDelay: "240ms" }}
           >
-            <Button variant="primary">View work</Button>
-            <Button variant="ghost">Download resume</Button>
+            <Button variant="primary" href="#projects">
+              View work
+            </Button>
+            <Button
+              variant="ghost"
+              href={profile.resumePath}
+              download={`${profile.fullName.replace(/\s+/g, "-")}-Resume.pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Download resume
+            </Button>
             <a
               href={profile.social.github}
-              className="text-muted transition-colors duration-interaction ease-out hover:text-signal"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted transition-[color,opacity] duration-interaction ease-out hover:text-signal active:opacity-70"
               aria-label="GitHub"
             >
               <svg viewBox="0 0 24 24" width={20} height={20} fill="currentColor" aria-hidden="true">
@@ -72,7 +84,9 @@ export function Hero() {
             </a>
             <a
               href={profile.social.linkedin}
-              className="text-muted transition-colors duration-interaction ease-out hover:text-signal"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted transition-[color,opacity] duration-interaction ease-out hover:text-signal active:opacity-70"
               aria-label="LinkedIn"
             >
               {/* simple-icons has no LinkedIn mark (removed from their library by
